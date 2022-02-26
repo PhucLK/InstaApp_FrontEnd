@@ -6,7 +6,6 @@ import StoreProvider from './store/store';
 ReactDOM.render(
   <React.StrictMode>
     <StoreProvider>
-
       <BrowserRouter>
         <App />
       </BrowserRouter>
