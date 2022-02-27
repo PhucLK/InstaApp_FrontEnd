@@ -16,7 +16,7 @@ function Routing() {
 
       </Route>
       <Route path="/accounts" element={<Accounts />}>
-        <Route index element={<Login />} />
+        <Route index element={<Login />} /> 
         <Route path="register" element={<Register />} />
       </Route>
     </Routes>
