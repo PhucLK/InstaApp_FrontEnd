@@ -1,12 +1,9 @@
 import { useState, React } from "react";
-// import { Box, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { FormControl } from "@mui/material";
-import { TextField, Button } from "@mui/material";
+import { FormControl, TextField, Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import Logo from "components/MUI/Logo";
+import Logo from "assets/images/login_logo.png";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import { Navigate } from "react-router-dom";
 import SignUp from "pages/authentication/SignUp";
 
 const useStyle = makeStyles({
@@ -16,6 +13,7 @@ const useStyle = makeStyles({
     minHeight: 200,
     borderRadius: 2,
     padding: "0 24px 24px 24px ",
+    marginTop: "20%",
   },
   form_logo: {
     display: "flex",
@@ -32,12 +30,19 @@ const useStyle = makeStyles({
     margin: "5% auto !important",
   },
   form_input: {
-    borderRadius: "2px",
+    borderRadius: "5px",
+    backgroundColor: "rgb(250,250,250) !important",
   },
-  form_helpText: {
+  form_option: {
     display: "flex",
     justifyContent: "center",
     margin: "5% auto",
+    fontSize: "1rem",
+    background: "white",
+    width: "20%",
+    position: "relative",
+    color: "#ccc",
+    fontWeight: "bold",
   },
 
   showPassword: {
@@ -50,7 +55,7 @@ const useStyle = makeStyles({
     fontWeight: "bold",
     fontSize: "15px",
     width: "30px",
-    // color: "rgb(38,38,38) !important",
+    color: "rgb(38,38,38) !important",
   },
   forgotPass: {
     display: "flex",
@@ -62,29 +67,47 @@ const useStyle = makeStyles({
   },
   btn: {
     backgroundColor: "rgb(0,145,246) !important",
+    textTransform: "none !important",
   },
   fb_btn: {
     backgroundColor: "white !important",
     color: "rgb(56,81,133) !important",
     textTransform: "none !important",
+    marginTop: "8% !important",
   },
   boxes: {
     display: "flex",
     justifyContent: "center",
     margin: "5% auto",
   },
+  logo: {
+    display: "flex",
+    justifyContent: "center",
+    margin: "5% auto",
+  },
+  line: {
+    borderTop: "1px solid #dbdbdb",
+    marginTop: "-10%",
+  },
 });
 
 function Login() {
+  const [user, setUser] = useState({ username: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const classes = useStyle();
+
+  const handleChange = (e) => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
+  };
   return (
     <>
       <div className={classes.wrapper}>
-        <Logo variant="div">Instagram</Logo>
-        {/* <img src={Logo} className={classes.form_logo} alt="Logo"></img> */}
+        {/* <Logo variant="div">Instagram</Logo> */}
+        <img src={Logo} className={classes.logo} alt="Logo"></img>
         <FormControl className={classes.form_control}>
           <TextField
             className={classes.form_input}
@@ -92,6 +115,12 @@ function Login() {
             label="Phone number, username, or email"
             type="text"
             variant="filled"
+            name="username"
+            InputProps={{
+              disableUnderline: true,
+            }}
+            value={user.username}
+            onChange={handleChange}
           />
           <TextField
             className={classes.form_input}
@@ -99,21 +128,25 @@ function Login() {
             id="filled-search"
             label="Password"
             variant="filled"
-            type={showPassword ? "text" : "password"} 
+            name="password"
+            InputProps={{
+              disableUnderline: true,
+            }}
+            type={showPassword ? "text" : "password"}
+            value={user.password}
+            onChange={handleChange}
           />
-          <p
-            className={classes.showPassword}
-            // aria-label="toggle password visibility"
-            onClick={handleClickShowPassword}
-          >
-            {showPassword ? "Hide" : "Show"}
+          <p className={classes.showPassword} onClick={handleClickShowPassword}>
+            {user.password.length > 0 ? (showPassword ? "Hide" : "Show") : ""}
           </p>
-          <Button className={classes.btn} sx={{ mt: 4 }} variant="contained">
-            Log in
+          <Button className={classes.btn} sx={{ mt: 6 }} variant="contained">
+            Log In
           </Button>
-          <span className={classes.form_helpText} id="my-helper-text">
-            OR
-          </span>
+          <div>
+            <span className={classes.form_option}>OR</span>
+            <div className={classes.line}></div>
+          </div>
+
           <Button
             className={classes.fb_btn}
             variant="text"
