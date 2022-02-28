@@ -3,7 +3,7 @@ import { makeStyles } from "@mui/styles";
 
 const useStyle = makeStyles({
   body: {
-    backgroundColor: "#fff",
+    backgroundColor: "rgb(250,250,250)",
     color: "#000",
     fontFamily: "proxima-nova, sans-serif",
     fontSize: "18px",
