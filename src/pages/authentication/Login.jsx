@@ -5,7 +5,6 @@ import { makeStyles } from "@mui/styles";
 import Logo from "assets/images/login_logo.png";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import SignUp from "pages/authentication/SignUp";
-import ReactCSSTransitionGroup from "react-transition-group";
 
 const useStyle = makeStyles({
   "@global": {
@@ -121,6 +120,7 @@ const useStyle = makeStyles({
 function Login() {
   const [user, setUser] = useState({ username: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
+
   const importAllImg = (r) => {
     let images = {};
     r.keys().forEach((item, index) => {
@@ -140,12 +140,10 @@ function Login() {
 
   const changeImg = (image) => {
     setImage(images[image]);
-    console.log(image)
   };
 
   useEffect(() => {
     setInterval(() => {
-      // changeImg("login1.png");
       setTimeout(() => {
         changeImg("login1.png");
       }, 6000);
@@ -177,7 +175,6 @@ function Login() {
       </div>
       <div className={classes.column2}>
         <div className={classes.wrapper}>
-          {/* <Logo variant="div">Instagram</Logo> */}
           <img src={Logo} className={classes.logo} alt="Logo"></img>
           <FormControl className={classes.form_control}>
             <TextField
