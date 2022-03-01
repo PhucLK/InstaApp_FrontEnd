@@ -5,21 +5,35 @@ import { makeStyles } from "@mui/styles";
 import Logo from "assets/images/login_logo.png";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import SignUp from "pages/authentication/SignUp";
+import ReactCSSTransitionGroup from "react-transition-group";
 
 const useStyle = makeStyles({
+  "@global": {
+    //need add into global rules
+    "@keyframes fadeInAnimation": {
+      "0%": {
+        opacity: 0,
+      },
+      "100%": {
+        opacity: 1,
+      },
+    },
+  },
+
   login: {
     display: "flex",
     position: "absolute",
     top: "50%",
     left: "50%",
-    "-webkit-transform": "translate(-50%, -50%)",
+    WebkitTransform: "translate(-50%, -50%)",
     transform: "translate(-50%, -50%)",
   },
   column1: {
     marginRight: "15px",
     position: "relative",
+    animation: "fadeInAnimation ease 5s",
   },
-  column2: {},
+
   wrapper: {
     border: "1px solid #ccc !important",
     width: 420,
@@ -60,7 +74,7 @@ const useStyle = makeStyles({
 
   showPassword: {
     textAlign: "right !important",
-    marginTop: "-10%",
+    marginTop: "-11%",
     marginLeft: "85%",
     zIndex: "1",
     position: "relative",
@@ -107,40 +121,41 @@ const useStyle = makeStyles({
 function Login() {
   const [user, setUser] = useState({ username: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
-  const [image, setImage] = useState(null);
-
-  const classes = useStyle();
-
-  function importAllImg(r) {
+  const importAllImg = (r) => {
     let images = {};
     r.keys().forEach((item, index) => {
       images[item.replace("./", "")] = r(item);
     });
     return images;
-  }
+  };
+
   // find all images in assets/images/slide folder that can be
   // required with a request ending with .png or .jpg
   const images = importAllImg(
     require.context("../../assets/images/slide", false, /\.(png|jpg)$/)
   );
+  const [image, setImage] = useState(images["login1.png"]);
+
+  const classes = useStyle();
 
   const changeImg = (image) => {
     setImage(images[image]);
-    console.log(image);
-    return;
+    console.log(image)
   };
 
   useEffect(() => {
-    changeImg("login1.png");
     setInterval(() => {
-      changeImg("login1.png");
+      // changeImg("login1.png");
+      setTimeout(() => {
+        changeImg("login1.png");
+      }, 6000);
       setTimeout(() => {
         changeImg("login2.png");
-      }, 4000);
+      }, 12000);
       setTimeout(() => {
         changeImg("login3.png");
-      }, 8000);
-    }, 16000);
+      }, 18000);
+    }, 36000);
   }, []);
 
   const handleClickShowPassword = () => {
@@ -156,8 +171,9 @@ function Login() {
 
   return (
     <div className={classes.login}>
-      <div className={classes.column1}>
-        <img width="420" height="595" src={image} alt="logo_slide" />
+      {/* key={image} : trigger animation every time when component re-reder */}
+      <div key={image} className={classes.column1}>
+        <img width="400" height="590" src={image} alt="logo_slide" />
       </div>
       <div className={classes.column2}>
         <div className={classes.wrapper}>
